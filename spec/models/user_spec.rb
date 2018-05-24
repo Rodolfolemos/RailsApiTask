@@ -19,31 +19,22 @@ RSpec.describe User, type: :model do
     end
   end
 
-<<<<<<< HEAD
   describe '#generate_authentication_token!' do
-    it 'generates a unique auth token'
+    it 'generates a unique auth token' do
+      allow(Devise).to receive(:friendly_token).and_return('ab123xyzTOKEN')
+      user.generate_authentication_token!
 
-    it 'generates another auth token when the current auth token already has been taken'
+      expect(user.auth_token).to eq('ab123xyzTOKEN')
+    end
+
+    it 'generates another auth token when the current auth token already has been taken' do
+    existing_user = create(:user, auth_token: 'ab123xyzTOKEN')
+    allow(Devise).to receive(:friendly_token).and_return('ab123xyzTOKEN', 'abc123XYZ')
+    user.generate_authentication_token!
+
+    expect(user.auth_token).not_to eq(existing_user.auth_token)
     
   end
+end
 
-=======
-  describe "#generate_authentication_token!" do
-      it " generate a unique auth token"  do
-        allow(Devise).to receive(:friendly_token).and_return('ab123xyzTOKEN')
-        user.generate_authentication_token!
-
-        expect(user.auth_token).to eq('ab123xyzTOKEN')  
-      end
-
-      it " generate another auth token when the current auth token already has been taken"  do
-        allow(Devise).to receive(:friendly_token).and_return('abc123tokenxyz', 'abc123tokenxyz', 'abcxyz123')
-        existing_user = create(:user)
-        user.generate_authentication_token!
-        
-        expect(user.auth_token).not_to eq(existing_user.auth_token)  
-      end
-        
-  end
->>>>>>> f0429aee23b7b26637d767995f76a9abf09470f0
 end
