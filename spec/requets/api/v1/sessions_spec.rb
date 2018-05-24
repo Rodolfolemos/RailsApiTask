@@ -26,18 +26,33 @@ RSpec.describe 'Seesions API', type: :request do
 					user.reload
 					expect(json_body[:auth_token]).to eq(user.auth_token)  
 				end
+			end
+			context 'when the credentials are incorrent' do
+			let(:credentials) { { email: user.email, password: 'invalid_password' } }
+			
+			it 'returns status code 401' do
+				expect(response).to have_http_status(401)  
+			end
+
+			it 'returns the json data for the errors' do
+				expect(json_body).to have_key(:errors)  
+			end
+			end
 		end
 
-		context 'when the credentials are incorrent' do
-				let(:credentials) { { email: user.email, password: 'invalid_password' } }
-				
-				it 'returns status code 401' do
-					expect(response).to have_http_status(401)  
-				end
+		describe 'DELETE /	/:id' do
+			let(:auth_token) { user.auth_token }
 
-				it 'returns the json data for the errors' do
-					expect(json_body).to have_key(:errors)  
-				end
+			before do
+				delete "/sessions/#{auth_token}", params: {}, headers: headers
+			end
+
+			it 'returns status code 204' do
+				expect(response).to have_http_status(204)  
+			end
+
+			it 'change the users auth token' do
+				expect( User.find_by(auth_token: auth_token) ).to be_nil  
+			end
 		end
-	end
 end
