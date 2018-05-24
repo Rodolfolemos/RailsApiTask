@@ -19,4 +19,11 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#generate_authentication_token!' do
+    it 'generates a unique auth token'
+
+    it 'generates another auth token when the current auth token already has been taken'
+    
+  end
+
 end
