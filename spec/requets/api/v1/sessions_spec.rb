@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Seesions API', type: :request do
+RSpec.describe 'Sessions API', type: :request do
 		before { host! 'api.taskmanager.test' }
 		let(:user) { create(:user) }
 		let(:headers) do
