@@ -22,7 +22,7 @@ end
   end
 
   def update
-    user = User.find(params[:id])
+    user = current_user
 
     if user.update(user_params)
       render json: user, staus: 200
@@ -33,47 +33,16 @@ end
 
 
   def destroy
-    user = User.find(params[:id])
-    user.destroy
+    current_user.destroy
     head 204
   end
-  
-  
-  
-
-
-private
-  def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
-    
-  end
-pdate
-    user = User.find(params[:id])
-
-    if user.update(user_params)
-      render json: user, staus: 200
-    else
-      render json: {  errors: user.errors }, status: 422
-    end
-  end
-
-
-  def destroy
-    user = User.find(params[:id])
-    user.destroy
-    head 204
-  end
-  
-  
-  
-
 
 private
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
   
-  def :authenticate_with_token!
+  def authenticate_with_token!
     
   end
   
