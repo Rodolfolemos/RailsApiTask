@@ -58,7 +58,6 @@ RSpec.describe Authenticable do
 
       it { expect(app_controller.user_logged_in?).to be false   }
     end
-    
   end
 
 end
