@@ -28,7 +28,7 @@ RSpec.describe 'Task API', type: :request do
       end
     end
 
-    context "when filter and shorting params is sent" do
+    context "when filter and sorting params is sent" do
       let!(:notebook_task_1) { create(:task, title: 'Check if the notebook is broken', user_id: user.id) }
       let!(:notebook_task_2) { create(:task, title: 'Buy a new notebook', user_id: user.id) }
       let!(:other_task_1) { create(:task, title: 'Fix the door', user_id: user.id) }
