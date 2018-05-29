@@ -22,7 +22,7 @@ RSpec.describe 'Users Api', type: :request do
 
       context "when the user exist" do
         it "returns the user" do
-          expect(json_body[:id]).to eq(user_id)
+          expect(json_body[:data][:id].to_i).to eq(user_id)
         end
 
         it 'returns status code 200' do
@@ -58,7 +58,7 @@ RSpec.describe 'Users Api', type: :request do
         end
 
         it 'returns json data for the created user' do
-          expect(json_body[:email]).to eq(user_params[:email])
+          expect(json_body[:data][:attributes][:email]).to eq(user_params[:email])
         end
 
       end
@@ -91,7 +91,7 @@ RSpec.describe 'Users Api', type: :request do
           expect(response).to have_http_status(200)
         end
         it "returns json data for the update user" do
-          expect(json_body[:email]).to eq(user_params[:email])  
+          expect(json_body[:data][:attributes][:email]).to eq(user_params[:email])  
         end
       end
 
