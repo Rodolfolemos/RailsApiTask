@@ -4,16 +4,19 @@ RSpec.describe 'Task API', type: :request do
   before { host! 'api.taskmanager.test' } 
 
   let!(:user) { create(:user) }
+  let!(:auth_data) { user.create_new_auth_token }
   let(:headers) do
     {
       'Content-Type' => Mime[:json].to_s,
       'Accept' => 'application/vnd.taskmanager.v2',
-      'Authorization' => user.auth_token
+      'access-token' => auth_data['access-token'],
+      'uid' => auth_data['uid'],
+      'client' => auth_data['client'],
     }
   end
 
   describe 'GET /tasks' do
-    context "when no filter params is sent" do
+    context 'when no filter params is sent' do
       before do
         create_list(:task, 5, user_id: user.id )
         get '/tasks', params: {}, headers: headers
